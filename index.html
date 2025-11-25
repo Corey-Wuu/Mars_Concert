@@ -46,6 +46,62 @@
             position: fixed;
         }
         
+        /* --- 新增：暗色模式提示样式 --- */
+        #darkModeNotice {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            z-index: 999999; /* 确保在最上层 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        #darkModeNotice .notice-content {
+            background-color: #fff;
+            padding: 30px 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            width: 350px;
+        }
+        #darkModeNotice h2 {
+            color: #5a4a7a;
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+        #darkModeNotice p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        #darkModeNotice button {
+            background: linear-gradient(135deg, #FF3E6C, #ff6b9d);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 62, 108, 0.3);
+        }
+        #darkModeNotice button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 62, 108, 0.4);
+        }
+        #darkModeNotice button:active {
+            transform: translateY(0);
+        }
+        
         /* --- 启动页样式 --- */
         .start-overlay {
             position: fixed;
@@ -475,6 +531,15 @@
     </style>
 </head>
 <body>
+    <!-- 新增：暗色模式提示框 -->
+    <div id="darkModeNotice">
+        <div class="notice-content">
+            <h2>观看体验提示</h2>
+            <p>为了更好地欣赏页面效果，建议您关闭系统的“暗色模式”或“夜间模式”。</p>
+            <button id="noticeConfirmBtn">我知道了</button>
+        </div>
+    </div>
+
     <!-- 启动覆盖层 -->
     <div class="start-overlay" id="startOverlay">
         <div class="start-title">🌸 Mars Concert 🌸</div>
@@ -534,6 +599,24 @@
 
     <!-- 先加载粒子库 -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <!-- 新增：控制提示框显示的脚本 -->
+    <script>
+        // 等待页面DOM完全加载
+        document.addEventListener('DOMContentLoaded', function() {
+            const notice = document.getElementById('darkModeNotice');
+            const confirmBtn = document.getElementById('noticeConfirmBtn');
+            
+            // 当用户点击按钮时，隐藏提示框
+            confirmBtn.addEventListener('click', function() {
+                notice.style.opacity = '0';
+                // 等待动画结束后，完全移除提示框
+                setTimeout(() => {
+                    notice.style.display = 'none';
+                }, 500); // 与CSS中的transition时间保持一致
+            });
+        });
+    </script>
     
     <script>
         // --- 主逻辑 ---
